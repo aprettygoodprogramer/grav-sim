@@ -5,11 +5,14 @@ use structs::body;
 
 #[macroquad::main("Grav Sim")]
 async fn main() {
+    let center_x = screen_width() / 2.0;
+    let center_y = screen_height() / 2.0;
+    let center = vec2(center_x, center_y);
     let mut bodies: Vec<body> = Vec::new();
     let  example_body = body{
-mass: 1000f32,
+mass: 10000f32,
 vel:  vec2(0f32, 0f32),
-pos: vec2(100f32, 100f32),
+pos: center,
 color: YELLOW,
     };
     let  example_body2 = body{

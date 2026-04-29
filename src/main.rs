@@ -10,25 +10,25 @@ async fn main() {
 mass: 1000f32,
 vel:  vec2(0f32, 0f32),
 pos: vec2(100f32, 100f32),
-color: RED
+color: YELLOW,
     };
     let  example_body2 = body{
         mass: 100f32,
         vel:  vec2(0f32, 0f32),
         pos: vec2(250f32, 250f32),
-        color: RED
+        color: BROWN,
             };
     bodies.push(example_body);
     bodies.push(example_body2);
 
-    
+
 
     loop {
         clear_background(BLACK);
         let dt = get_frame_time();
         update_physics(&mut bodies, dt);
         for body in &bodies {
-            let radius = body.mass.sqrt().clamp(1.0, 10.0);
+            let radius = body.mass.sqrt().clamp(1.0, 100.0);
             draw_circle(body.pos.x, body.pos.y, radius, body.color);
         }
 

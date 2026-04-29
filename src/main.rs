@@ -15,10 +15,11 @@ vel:  vec2(0f32, 0f32),
 pos: center,
 color: YELLOW,
     };
+    let lil_object_pos = vec2(250f32, 250f32);
     let  example_body2 = body{
-        mass: 100f32,
-        vel:  vec2(0f32, 0f32),
-        pos: vec2(250f32, 250f32),
+        mass: 10f32,
+        vel:  calculate_orbit(lil_object_pos, center, 10000f32),
+        pos: lil_object_pos,
         color: BROWN,
             };
     bodies.push(example_body);
@@ -65,7 +66,21 @@ fn update_physics(bodies: &mut Vec<body>, dt: f32) {
      
 
 
+fn calculate_orbit(body_pos: Vec2, orbit_pos: Vec2, orbit_mass: f32) -> Vec2{
+    let offset = body_pos - orbit_pos; 
+    let dist_sq = offset.length_squared();
+    let dist = dist_sq.sqrt();
 
+    let accel = (50f32 * orbit_mass) / (dist_sq + 100f32);
+
+    let speed = (accel * dist).sqrt();
+
+    let tangent = vec2(-offset.y, offset.x).normalize();
+
+    let orbit_vel = tangent * speed;
+    return orbit_vel;
+
+}
 
 
 

@@ -1,5 +1,5 @@
 use macroquad::prelude::*;
-
+#[derive(Clone)]
 pub struct body {
 pub mass: f32,
 pub vel: Vec2,

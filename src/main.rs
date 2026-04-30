@@ -29,6 +29,11 @@ color: YELLOW,
 
     loop {
         clear_background(BLACK);
+        if is_mouse_button_pressed(MouseButton::Left) {
+            let (x, y) = mouse_position();
+            bodies.push(body { mass: (100f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
+        }
+
         let dt = get_frame_time();
         update_physics(&mut bodies, dt);
         for body in &bodies {
@@ -83,9 +88,3 @@ fn calculate_orbit(body_pos: Vec2, orbit_pos: Vec2, orbit_mass: f32) -> Vec2{
 }
 
 
-
-// Planning:
-
-// I need a body object, with mass, and position
-
-// Then every frame i need to calculate and move each object using gravity formula

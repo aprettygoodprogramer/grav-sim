@@ -9,6 +9,12 @@ async fn main() {
     let center_y = screen_height() / 2.0;
     let center = vec2(center_x, center_y);
     let mut bodies: Vec<body> = Vec::new();
+    let mut is_holding = false;
+
+    let mut duration = 0f64;
+    let mut click_start_time = 0f64;
+
+    //Examples
     let  example_body = body{
 mass: 10000f32,
 vel:  vec2(0f32, 0f32),
@@ -30,10 +36,20 @@ color: YELLOW,
     loop {
         clear_background(BLACK);
         if is_mouse_button_pressed(MouseButton::Left) {
-            let (x, y) = mouse_position();
-            bodies.push(body { mass: (100f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
+            
+            click_start_time = get_time();
+            is_holding = true;
+            //bodies.push(body { mass: (500f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
+        }
+        if is_holding && is_mouse_button_down(MouseButton::Left) {
+            duration = get_time() - click_start_time;
         }
 
+        if is_mouse_button_released(MouseButton::Left) {
+            is_holding = false;
+            let (x, y) = mouse_position();
+            bodies.push(body { mass: ((duration*50f64) as f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
+        }
         let dt = get_frame_time();
         update_physics(&mut bodies, dt);
         for body in &bodies {

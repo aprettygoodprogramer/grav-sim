@@ -2,7 +2,6 @@ use macroquad::{color, prelude::*};
 mod structs;
 use structs::body;
 
-
 #[macroquad::main("Grav Sim")]
 async fn main() {
     let center_x = screen_width() / 2.0;
@@ -15,28 +14,25 @@ async fn main() {
     let mut click_start_time = 0f64;
 
     //Examples
-    let  example_body = body{
-mass: 10000f32,
-vel:  vec2(0f32, 0f32),
-pos: center,
-color: YELLOW,
+    let example_body = body {
+        mass: 10000f32,
+        vel: vec2(0f32, 0f32),
+        pos: center,
+        color: YELLOW,
     };
-    let lil_object_pos = vec2(250f32, 250f32);
-    let  example_body2 = body{
+    let lil_object_pos = vec2(100f32, 100f32);
+    let example_body2 = body {
         mass: 10f32,
-        vel:  calculate_orbit(lil_object_pos, center, 10000f32),
+        vel: calculate_orbit(lil_object_pos, center, 10000f32),
         pos: lil_object_pos,
         color: BROWN,
-            };
+    };
     bodies.push(example_body);
     bodies.push(example_body2);
-
-
 
     loop {
         clear_background(BLACK);
         if is_mouse_button_pressed(MouseButton::Left) {
-            
             click_start_time = get_time();
             is_holding = true;
             //bodies.push(body { mass: (500f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
@@ -48,7 +44,13 @@ color: YELLOW,
         if is_mouse_button_released(MouseButton::Left) {
             is_holding = false;
             let (x, y) = mouse_position();
-            bodies.push(body { mass: ((duration*50f64) as f32), vel: (vec2(0f32, 0f32)), pos: (vec2(x, y)), color: (RED) })
+            println!("I made it here!");
+            bodies.push(body {
+                mass: ((duration * 50f64) as f32),
+                vel: (calculate_orbit(vec2(x, y), center, 10000f32)),
+                pos: (vec2(x, y)),
+                color: (RED),
+            })
         }
         let dt = get_frame_time();
         update_physics(&mut bodies, dt);
@@ -57,15 +59,12 @@ color: YELLOW,
             draw_circle(body.pos.x, body.pos.y, radius, body.color);
         }
 
-
         next_frame().await
     }
 }
 
 fn update_physics(bodies: &mut Vec<body>, dt: f32) {
-
     let old_state = bodies.clone();
-    
 
     for i in bodies.iter_mut() {
         let mut total_acceleration = vec2(0.0, 0.0);
@@ -84,11 +83,9 @@ fn update_physics(bodies: &mut Vec<body>, dt: f32) {
         i.pos += i.vel * dt;
     }
 }
-     
 
-
-fn calculate_orbit(body_pos: Vec2, orbit_pos: Vec2, orbit_mass: f32) -> Vec2{
-    let offset = body_pos - orbit_pos; 
+fn calculate_orbit(body_pos: Vec2, orbit_pos: Vec2, orbit_mass: f32) -> Vec2 {
+    let offset = body_pos - orbit_pos;
     let dist_sq = offset.length_squared();
     let dist = dist_sq.sqrt();
 
@@ -100,7 +97,4 @@ fn calculate_orbit(body_pos: Vec2, orbit_pos: Vec2, orbit_mass: f32) -> Vec2{
 
     let orbit_vel = tangent * speed;
     return orbit_vel;
-
 }
-
-

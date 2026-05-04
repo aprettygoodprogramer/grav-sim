@@ -1,6 +1,6 @@
 A simple gravity simulation.
 
-
+[![Example](https://imgur.com)](https://imgur.com/a/dgqzuCQ)
 
 # How to run
 

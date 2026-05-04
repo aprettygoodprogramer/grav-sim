@@ -51,7 +51,7 @@ async fn main() {
             let which_color = rng.random_range(0..rand_colors.len());
             bodies.push(body {
                 mass: ((duration * 50f64) as f32),
-                vel: (calculate_orbit(vec2(x, y), center, 10000f32)),
+                vel: (calculate_orbit(vec2(x, y), bodies[0].pos, 10000f32)),
                 pos: (vec2(x, y)),
                 color: (rand_colors[which_color]),
             })

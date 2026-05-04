@@ -7,3 +7,9 @@ pub pos: Vec2,
 pub color: Color
 
 }
+
+impl body {
+    pub fn get_pos(&self) -> Vec2 {
+        self.pos
+    }
+}

@@ -1,7 +1,5 @@
 A simple gravity simulation.
 
-![Example](https://imgur.com/eq1eEVk)
-
 # How to run
 
 Make sure you have Rust installed. If you don't, there is a guide [here](https://rust-lang.org/tools/install/)

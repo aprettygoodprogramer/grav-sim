@@ -1,15 +1,19 @@
 use macroquad::{color, prelude::*};
 mod structs;
 use structs::body;
+use ::rand::prelude::*;
+
 
 #[macroquad::main("Grav Sim")]
 async fn main() {
+    let mut rng = ::rand::rng();
+
     let center_x = screen_width() / 2.0;
     let center_y = screen_height() / 2.0;
     let center = vec2(center_x, center_y);
     let mut bodies: Vec<body> = Vec::new();
     let mut is_holding = false;
-
+    let rand_colors = vec![RED, BLUE, GREEN, YELLOW, PURPLE, ORANGE, BROWN, WHITE];
     let mut duration = 0f64;
     let mut click_start_time = 0f64;
 
@@ -44,12 +48,12 @@ async fn main() {
         if is_mouse_button_released(MouseButton::Left) {
             is_holding = false;
             let (x, y) = mouse_position();
-            println!("I made it here!");
+            let which_color = rng.random_range(0..rand_colors.len());
             bodies.push(body {
                 mass: ((duration * 50f64) as f32),
                 vel: (calculate_orbit(vec2(x, y), center, 10000f32)),
                 pos: (vec2(x, y)),
-                color: (RED),
+                color: (rand_colors[which_color]),
             })
         }
         let dt = get_frame_time();
